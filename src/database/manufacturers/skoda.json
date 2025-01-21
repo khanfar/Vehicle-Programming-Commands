@@ -1,0 +1,343 @@
+{
+  "Octavia": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "supports_obd_dtc": true,
+      "supports_obd_live_data": true,
+      "supports_obd_emissions": true,
+      "supports_obd_params": true,
+      "immobilizer_ecu_id": "0x780",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Initialize Programming",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Start Programming",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Program Key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Write Configuration",
+          "command": "2E F1 00",
+          "expected_response": "6E F1 00",
+          "delay": 5
+        },
+        {
+          "description": "Verify Programming",
+          "command": "31 07 FF 00",
+          "expected_response": "71 07 FF 00"
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter Bypass Mode",
+          "command": "31 10 FF 00",
+          "expected_response": "71 10 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Activate Bypass",
+          "command": "31 11 FF 01",
+          "expected_response": "71 11 FF 00"
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_count": "lambda x: int(x[6:8], 16)"
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter Clear Mode",
+          "command": "31 05 FF 00",
+          "expected_response": "71 05 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Clear All Keys",
+          "command": "31 06 FF 00",
+          "expected_response": "71 06 FF 00"
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter PIN Read Mode",
+          "command": "31 07 FF 00",
+          "expected_response": "71 07 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Read PIN",
+          "command": "22 F1 8C",
+          "expected_response": "62 F1",
+          "parse_pin": "lambda x: ''.join([chr(int(x[i:i+2], 16)) for i in range(4, 12, 2)])"
+        }
+      ],
+      "obd_dtc_sequence": [
+        {
+          "description": "Read DTCs",
+          "command": "03",
+          "expected_response": "43",
+          "parse_dtc": "lambda x: [x[i:i+4] for i in range(2, len(x)-2, 4)]",
+          "delay": 0.2
+        },
+        {
+          "description": "Read Pending DTCs",
+          "command": "07",
+          "expected_response": "47",
+          "parse_dtc": "lambda x: [x[i:i+4] for i in range(2, len(x)-2, 4)]",
+          "delay": 0.2
+        }
+      ],
+      "obd_live_data_sequence": [
+        {
+          "description": "Engine RPM",
+          "command": "01 0C",
+          "expected_response": "41 0C",
+          "parse_live_data": "lambda x: int(x[4:8], 16)/4",
+          "delay": 0.1
+        },
+        {
+          "description": "Vehicle Speed",
+          "command": "01 0D",
+          "expected_response": "41 0D",
+          "parse_live_data": "lambda x: int(x[4:6], 16)",
+          "delay": 0.1
+        },
+        {
+          "description": "Engine Coolant Temperature",
+          "command": "01 05",
+          "expected_response": "41 05",
+          "parse_live_data": "lambda x: int(x[4:6], 16) - 40",
+          "delay": 0.1
+        }
+      ],
+      "obd_emissions_sequence": [
+        {
+          "description": "Get Monitor Status Since DTCs Cleared",
+          "command": "01 01",
+          "expected_response": "41 01",
+          "parse_emissions": "lambda x: {'MIL': bool(int(x[4], 16) & 0x8), 'DTC_COUNT': int(x[4], 16) & 0x7F}",
+          "delay": 0.2
+        },
+        {
+          "description": "Oxygen Sensor Monitor",
+          "command": "01 14",
+          "expected_response": "41 14",
+          "parse_emissions": "lambda x: float(int(x[4:6], 16))/200",
+          "delay": 0.2
+        }
+      ],
+      "obd_params_sequence": [
+        {
+          "description": "Fuel System Status",
+          "command": "01 03",
+          "expected_response": "41 03",
+          "parse_params": "lambda x: {'SYSTEM1': int(x[4:6], 16), 'SYSTEM2': int(x[6:8], 16) if len(x) > 6 else None}",
+          "delay": 0.2
+        },
+        {
+          "description": "Calculated Engine Load",
+          "command": "01 04",
+          "expected_response": "41 04",
+          "parse_params": "lambda x: float(int(x[4:6], 16))/2.55",
+          "delay": 0.2
+        },
+        {
+          "description": "Timing Advance",
+          "command": "01 0E",
+          "expected_response": "41 0E",
+          "parse_params": "lambda x: (float(int(x[4:6], 16))/2) - 64",
+          "delay": 0.2
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x781"
+    },
+    "2020-2023": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x782"
+    }
+  },
+  "Kodiaq": {
+    "2016-2019": {
+      "_extends": "Octavia.2015-2019",
+      "immobilizer_ecu_id": "0x789"
+    },
+    "2020-2023": {
+      "_extends": "Kodiaq.2016-2019"
+    }
+  },
+  "Superb": {
+    "2010-2014": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x783"
+    },
+    "2015-2019": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x784"
+    },
+    "2020-2023": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x785"
+    }
+  },
+  "Fabia": {
+    "2010-2014": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x786"
+    },
+    "2015-2019": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x787"
+    },
+    "2020-2023": {
+      "_extends": "Octavia.2010-2014",
+      "immobilizer_ecu_id": "0x788"
+    }
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "3-Series": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x910",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_result": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "3-Series.2010-2014",
+      "immobilizer_ecu_id": "0x912",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 65",
+          "expected_response": "67 65",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 66 {calculated_key}",
+          "expected_response": "67 66",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "3-Series.2015-2019",
+      "immobilizer_ecu_id": "0x914",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 69",
+          "expected_response": "67 69",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 6A {calculated_key}",
+          "expected_response": "67 6A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "5-Series": {
+    "2010-2014": {
+      "_extends": "3-Series.2010-2014",
+      "immobilizer_ecu_id": "0x920"
+    },
+    "2015-2019": {
+      "_extends": "3-Series.2015-2019",
+      "immobilizer_ecu_id": "0x922"
+    },
+    "2020-2023": {
+      "_extends": "3-Series.2020-2023",
+      "immobilizer_ecu_id": "0x924"
+    }
+  },
+  "7-Series": {
+    "2010-2014": {
+      "_extends": "3-Series.2010-2014",
+      "immobilizer_ecu_id": "0x930"
+    },
+    "2015-2019": {
+      "_extends": "3-Series.2015-2019",
+      "immobilizer_ecu_id": "0x932"
+    },
+    "2020-2023": {
+      "_extends": "3-Series.2020-2023",
+      "immobilizer_ecu_id": "0x934"
+    }
+  },
+  "X3": {
+    "2010-2014": {
+      "_extends": "3-Series.2010-2014",
+      "immobilizer_ecu_id": "0x940"
+    },
+    "2015-2019": {
+      "_extends": "3-Series.2015-2019",
+      "immobilizer_ecu_id": "0x942"
+    },
+    "2020-2023": {
+      "_extends": "3-Series.2020-2023",
+      "immobilizer_ecu_id": "0x944"
+    }
+  },
+  "X5": {
+    "2010-2014": {
+      "_extends": "3-Series.2010-2014",
+      "immobilizer_ecu_id": "0x950"
+    },
+    "2015-2019": {
+      "_extends": "3-Series.2015-2019",
+      "immobilizer_ecu_id": "0x952"
+    },
+    "2020-2023": {
+      "_extends": "3-Series.2020-2023",
+      "immobilizer_ecu_id": "0x954"
+    }
+  },
+  "X7": {
+    "2019-2023": {
+      "_extends": "3-Series.2020-2023",
+      "immobilizer_ecu_id": "0x960"
+    }
+  },
+  "M3": {
+    "2010-2014": {
+      "_extends": "3-Series.2010-2014",
+      "immobilizer_ecu_id": "0x970"
+    },
+    "2015-2019": {
+      "_extends": "3-Series.2015-2019",
+      "immobilizer_ecu_id": "0x972"
+    },
+    "2020-2023": {
+      "_extends": "3-Series.2020-2023",
+      "immobilizer_ecu_id": "0x974"
+    }
+  },
+  "M5": {
+    "2010-2014": {
+      "_extends": "3-Series.2010-2014",
+      "immobilizer_ecu_id": "0x980"
+    },
+    "2015-2019": {
+      "_extends": "3-Series.2015-2019",
+      "immobilizer_ecu_id": "0x982"
+    },
+    "2020-2023": {
+      "_extends": "3-Series.2020-2023",
+      "immobilizer_ecu_id": "0x984"
+    }
+  }
+}

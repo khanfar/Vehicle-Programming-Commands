@@ -1,0 +1,266 @@
+{
+  "Corsa": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x7C0",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Initialize Programming",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Start Programming",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Program Key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Write Configuration",
+          "command": "2E F1 00",
+          "expected_response": "6E F1 00",
+          "delay": 5
+        },
+        {
+          "description": "Verify Programming",
+          "command": "31 07 FF 00",
+          "expected_response": "71 07 FF 00"
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter Bypass Mode",
+          "command": "31 10 FF 00",
+          "expected_response": "71 10 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Activate Bypass",
+          "command": "31 11 FF 01",
+          "expected_response": "71 11 FF 00"
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_count": "lambda x: int(x[6:8], 16)"
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter Clear Mode",
+          "command": "31 05 FF 00",
+          "expected_response": "71 05 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Clear All Keys",
+          "command": "31 06 FF 00",
+          "expected_response": "71 06 FF 00"
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter PIN Read Mode",
+          "command": "31 07 FF 00",
+          "expected_response": "71 07 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Read PIN",
+          "command": "22 F1 8C",
+          "expected_response": "62 F1",
+          "parse_pin": "lambda x: ''.join([chr(int(x[i:i+2], 16)) for i in range(4, 12, 2)])"
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C1"
+    },
+    "2020-2023": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C2"
+    }
+  },
+  "Astra": {
+    "2010-2014": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C3"
+    },
+    "2015-2019": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C4"
+    },
+    "2020-2023": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C5"
+    }
+  },
+  "Insignia": {
+    "2010-2014": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C6"
+    },
+    "2015-2019": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C7"
+    },
+    "2020-2023": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C8"
+    }
+  },
+  "Mokka": {
+    "2012-2014": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7C9"
+    },
+    "2015-2019": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7CA"
+    },
+    "2020-2023": {
+      "_extends": "Corsa.2010-2014",
+      "immobilizer_ecu_id": "0x7CB"
+    }
+  }
+}

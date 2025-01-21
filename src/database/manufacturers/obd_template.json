@@ -1,0 +1,123 @@
+{
+  "obd_support": {
+    "supports_obd_dtc": true,
+    "supports_obd_live_data": true,
+    "supports_obd_emissions": true,
+    "supports_obd_params": true
+  },
+  "obd_sequences": {
+    "obd_dtc_sequence": [
+      {
+        "description": "Read DTCs",
+        "command": "03",
+        "expected_response": "43",
+        "parse_dtc": "lambda x: [x[i:i+4] for i in range(2, len(x)-2, 4)]",
+        "delay": 0.2
+      },
+      {
+        "description": "Read Pending DTCs",
+        "command": "07",
+        "expected_response": "47",
+        "parse_dtc": "lambda x: [x[i:i+4] for i in range(2, len(x)-2, 4)]",
+        "delay": 0.2
+      }
+    ],
+    "obd_live_data_sequence": [
+      {
+        "description": "Engine RPM",
+        "command": "01 0C",
+        "expected_response": "41 0C",
+        "parse_live_data": "lambda x: int(x[4:8], 16)/4",
+        "delay": 0.1
+      },
+      {
+        "description": "Vehicle Speed",
+        "command": "01 0D",
+        "expected_response": "41 0D",
+        "parse_live_data": "lambda x: int(x[4:6], 16)",
+        "delay": 0.1
+      },
+      {
+        "description": "Engine Coolant Temperature",
+        "command": "01 05",
+        "expected_response": "41 05",
+        "parse_live_data": "lambda x: int(x[4:6], 16) - 40",
+        "delay": 0.1
+      },
+      {
+        "description": "Throttle Position",
+        "command": "01 11",
+        "expected_response": "41 11",
+        "parse_live_data": "lambda x: float(int(x[4:6], 16))/2.55",
+        "delay": 0.1
+      },
+      {
+        "description": "MAF Air Flow Rate",
+        "command": "01 10",
+        "expected_response": "41 10",
+        "parse_live_data": "lambda x: int(x[4:8], 16)/100",
+        "delay": 0.1
+      }
+    ],
+    "obd_emissions_sequence": [
+      {
+        "description": "Get Monitor Status Since DTCs Cleared",
+        "command": "01 01",
+        "expected_response": "41 01",
+        "parse_emissions": "lambda x: {'MIL': bool(int(x[4], 16) & 0x8), 'DTC_COUNT': int(x[4], 16) & 0x7F}",
+        "delay": 0.2
+      },
+      {
+        "description": "Oxygen Sensor Monitor",
+        "command": "01 14",
+        "expected_response": "41 14",
+        "parse_emissions": "lambda x: float(int(x[4:6], 16))/200",
+        "delay": 0.2
+      },
+      {
+        "description": "Catalyst Monitor",
+        "command": "01 1D",
+        "expected_response": "41 1D",
+        "parse_emissions": "lambda x: float(int(x[4:6], 16))/100",
+        "delay": 0.2
+      }
+    ],
+    "obd_params_sequence": [
+      {
+        "description": "Fuel System Status",
+        "command": "01 03",
+        "expected_response": "41 03",
+        "parse_params": "lambda x: {'SYSTEM1': int(x[4:6], 16), 'SYSTEM2': int(x[6:8], 16) if len(x) > 6 else None}",
+        "delay": 0.2
+      },
+      {
+        "description": "Calculated Engine Load",
+        "command": "01 04",
+        "expected_response": "41 04",
+        "parse_params": "lambda x: float(int(x[4:6], 16))/2.55",
+        "delay": 0.2
+      },
+      {
+        "description": "Timing Advance",
+        "command": "01 0E",
+        "expected_response": "41 0E",
+        "parse_params": "lambda x: (float(int(x[4:6], 16))/2) - 64",
+        "delay": 0.2
+      },
+      {
+        "description": "Fuel Pressure",
+        "command": "01 0A",
+        "expected_response": "41 0A",
+        "parse_params": "lambda x: int(x[4:6], 16) * 3",
+        "delay": 0.2
+      },
+      {
+        "description": "Intake Manifold Pressure",
+        "command": "01 0B",
+        "expected_response": "41 0B",
+        "parse_params": "lambda x: int(x[4:6], 16)",
+        "delay": 0.2
+      }
+    ]
+  }
+}

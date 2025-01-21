@@ -1,0 +1,1935 @@
+{
+  "Elantra": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x7E0",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 01",
+          "expected_response": "67 01",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 02 {calculated_key}",
+          "expected_response": "67 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 01",
+          "expected_response": "67 01",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 02 {calculated_key}",
+          "expected_response": "67 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 00",
+          "expected_response": "71 01 60 00",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 00",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 01",
+          "expected_response": "67 01",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 02 {calculated_key}",
+          "expected_response": "67 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_count": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 01",
+          "expected_response": "67 01",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 02 {calculated_key}",
+          "expected_response": "67 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Clear Keys Routine",
+          "command": "31 01 FF 01",
+          "expected_response": "71 01 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Check Clear Status",
+          "command": "31 03 FF 01",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 03",
+          "expected_response": "67 03",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 04 {calculated_key}",
+          "expected_response": "67 04",
+          "delay": 0.1
+        },
+        {
+          "description": "Read PIN",
+          "command": "22 F1 A0",
+          "expected_response": "62 F1 A0",
+          "parse_pin": "lambda x: x[6:14]",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "2010-2014",
+      "immobilizer_ecu_id": "0x7E2",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 05",
+          "expected_response": "67 05",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 06 {calculated_key}",
+          "expected_response": "67 06",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "2015-2019",
+      "immobilizer_ecu_id": "0x7E4",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 09",
+          "expected_response": "67 09",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 0A {calculated_key}",
+          "expected_response": "67 0A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "Sonata": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x7E1",
+      "_extends": "Elantra.2010-2014",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 11",
+          "expected_response": "67 11",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 12 {calculated_key}",
+          "expected_response": "67 12",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Sonata.2010-2014",
+      "immobilizer_ecu_id": "0x7E3"
+    },
+    "2020-2023": {
+      "_extends": "Sonata.2015-2019",
+      "immobilizer_ecu_id": "0x7E5"
+    }
+  },
+  "Tucson": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x7D0",
+      "_extends": "Elantra.2010-2014",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 15",
+          "expected_response": "67 15",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 16 {calculated_key}",
+          "expected_response": "67 16",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 15",
+          "expected_response": "67 15",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 16 {calculated_key}",
+          "expected_response": "67 16",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Tucson.2010-2014",
+      "immobilizer_ecu_id": "0x7D2",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 19",
+          "expected_response": "67 19",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 1A {calculated_key}",
+          "expected_response": "67 1A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "Tucson.2015-2019",
+      "immobilizer_ecu_id": "0x7D4",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 1D",
+          "expected_response": "67 1D",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 1E {calculated_key}",
+          "expected_response": "67 1E",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "Santa Fe": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x7C0",
+      "_extends": "Elantra.2010-2014",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 21",
+          "expected_response": "67 21",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 22 {calculated_key}",
+          "expected_response": "67 22",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 21",
+          "expected_response": "67 21",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 22 {calculated_key}",
+          "expected_response": "67 22",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 21",
+          "expected_response": "67 21",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 22 {calculated_key}",
+          "expected_response": "67 22",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_result": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Santa Fe.2010-2014",
+      "immobilizer_ecu_id": "0x7C2",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 25",
+          "expected_response": "67 25",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 26 {calculated_key}",
+          "expected_response": "67 26",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "Santa Fe.2015-2019",
+      "immobilizer_ecu_id": "0x7C4",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 29",
+          "expected_response": "67 29",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 2A {calculated_key}",
+          "expected_response": "67 2A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "Ioniq 5": {
+    "2020-2023": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x7B0",
+      "_extends": "Elantra.2020-2023",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 31",
+          "expected_response": "67 31",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 32 {calculated_key}",
+          "expected_response": "67 32",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 31",
+          "expected_response": "67 31",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 32 {calculated_key}",
+          "expected_response": "67 32",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 31",
+          "expected_response": "67 31",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 32 {calculated_key}",
+          "expected_response": "67 32",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_result": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 31",
+          "expected_response": "67 31",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 32 {calculated_key}",
+          "expected_response": "67 32",
+          "delay": 0.1
+        },
+        {
+          "description": "Read PIN",
+          "command": "22 F1 91",
+          "expected_response": "62 F1 91",
+          "parse_result": "lambda x: x[6:14]",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "Accent": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "key_add_sequence": [
+        {
+          "description": "Enter programming mode",
+          "command": "G8 01 00",
+          "expected_response": "K8 01 00",
+          "delay": 1
+        },
+        {
+          "description": "Request security access",
+          "command": "27 01",
+          "expected_response": "67 01",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "G8 02 00",
+          "expected_response": "K8 02 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "G8 03 00",
+          "expected_response": "K8 03 00"
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Enter bypass mode",
+          "command": "G8 10 00",
+          "expected_response": "K8 10 00",
+          "delay": 1
+        },
+        {
+          "description": "Activate bypass",
+          "command": "G8 11 01",
+          "expected_response": "K8 11 00"
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Read key count",
+          "command": "G8 04 00",
+          "expected_response": "K8 04"
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Enter clear mode",
+          "command": "G8 05 00",
+          "expected_response": "K8 05 00",
+          "delay": 1
+        },
+        {
+          "description": "Clear all keys",
+          "command": "G8 06 00",
+          "expected_response": "K8 06 00"
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Enter PIN read mode",
+          "command": "G8 07 00",
+          "expected_response": "K8 07 00",
+          "delay": 1
+        },
+        {
+          "description": "Read PIN",
+          "command": "G8 08 00",
+          "expected_response": "K8 08",
+          "parse_pin": "lambda x: ''.join([chr(int(x[i:i+2], 16)) for i in range(4, 12, 2)])"
+        }
+      ]
+    },
+    "2015-2019": {"_extends": "Accent.2010-2014"},
+    "2020-2023": {"_extends": "Accent.2010-2014"}
+  },
+  "Venue": {
+    "2019-2023": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "key_add_sequence": [
+        {
+          "description": "Enter programming mode",
+          "command": "G9 01 00",
+          "expected_response": "K9 01 00",
+          "delay": 1
+        },
+        {
+          "description": "Request security access",
+          "command": "27 01",
+          "expected_response": "67 01",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "G9 02 00",
+          "expected_response": "K9 02 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "G9 03 00",
+          "expected_response": "K9 03 00"
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Enter bypass mode",
+          "command": "G9 10 00",
+          "expected_response": "K9 10 00",
+          "delay": 1
+        },
+        {
+          "description": "Activate bypass",
+          "command": "G9 11 01",
+          "expected_response": "K9 11 00"
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Read key count",
+          "command": "G9 04 00",
+          "expected_response": "K9 04"
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Enter clear mode",
+          "command": "G9 05 00",
+          "expected_response": "K9 05 00",
+          "delay": 1
+        },
+        {
+          "description": "Clear all keys",
+          "command": "G9 06 00",
+          "expected_response": "K9 06 00"
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Enter PIN read mode",
+          "command": "G9 07 00",
+          "expected_response": "K9 07 00",
+          "delay": 1
+        },
+        {
+          "description": "Read PIN",
+          "command": "G9 08 00",
+          "expected_response": "K9 08",
+          "parse_pin": "lambda x: ''.join([chr(int(x[i:i+2], 16)) for i in range(4, 12, 2)])"
+        }
+      ]
+    }
+  },
+  "Ioniq": {
+    "2016-2019": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "key_add_sequence": [
+        {
+          "description": "Enter programming mode",
+          "command": "G10 01 00",
+          "expected_response": "K10 01 00",
+          "delay": 1
+        },
+        {
+          "description": "Request security access",
+          "command": "27 01",
+          "expected_response": "67 01",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "G10 02 00",
+          "expected_response": "K10 02 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "G10 03 00",
+          "expected_response": "K10 03 00"
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Enter bypass mode",
+          "command": "G10 10 00",
+          "expected_response": "K10 10 00",
+          "delay": 1
+        },
+        {
+          "description": "Activate bypass",
+          "command": "G10 11 01",
+          "expected_response": "K10 11 00"
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Read key count",
+          "command": "G10 04 00",
+          "expected_response": "K10 04"
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Enter clear mode",
+          "command": "G10 05 00",
+          "expected_response": "K10 05 00",
+          "delay": 1
+        },
+        {
+          "description": "Clear all keys",
+          "command": "G10 06 00",
+          "expected_response": "K10 06 00"
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Enter PIN read mode",
+          "command": "G10 07 00",
+          "expected_response": "K10 07 00",
+          "delay": 1
+        },
+        {
+          "description": "Read PIN",
+          "command": "G10 08 00",
+          "expected_response": "K10 08",
+          "parse_pin": "lambda x: ''.join([chr(int(x[i:i+2], 16)) for i in range(4, 12, 2)])"
+        }
+      ]
+    },
+    "2020-2023": {"_extends": "Ioniq.2016-2019"}
+  },
+  "Kona": {
+    "2018-2023": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x7A0",
+      "_extends": "Elantra.2020-2023",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 35",
+          "expected_response": "67 35",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 36 {calculated_key}",
+          "expected_response": "67 36",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 35",
+          "expected_response": "67 35",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 36 {calculated_key}",
+          "expected_response": "67 36",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "Venue": {
+    "2020-2023": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x790",
+      "_extends": "Elantra.2020-2023",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 39",
+          "expected_response": "67 39",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 3A {calculated_key}",
+          "expected_response": "67 3A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 39",
+          "expected_response": "67 39",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 3A {calculated_key}",
+          "expected_response": "67 3A",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "i20": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x780",
+      "_extends": "Elantra.2010-2014",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 41",
+          "expected_response": "67 41",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 42 {calculated_key}",
+          "expected_response": "67 42",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 41",
+          "expected_response": "67 41",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 42 {calculated_key}",
+          "expected_response": "67 42",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "i20.2010-2014",
+      "immobilizer_ecu_id": "0x782",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 45",
+          "expected_response": "67 45",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 46 {calculated_key}",
+          "expected_response": "67 46",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "i20.2015-2019",
+      "immobilizer_ecu_id": "0x784",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 49",
+          "expected_response": "67 49",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 4A {calculated_key}",
+          "expected_response": "67 4A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "i30": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x770",
+      "_extends": "Elantra.2010-2014",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 51",
+          "expected_response": "67 51",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 52 {calculated_key}",
+          "expected_response": "67 52",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 51",
+          "expected_response": "67 51",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 52 {calculated_key}",
+          "expected_response": "67 52",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "i30.2010-2014",
+      "immobilizer_ecu_id": "0x772",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 55",
+          "expected_response": "67 55",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 56 {calculated_key}",
+          "expected_response": "67 56",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "i30.2015-2019",
+      "immobilizer_ecu_id": "0x774",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 59",
+          "expected_response": "67 59",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 5A {calculated_key}",
+          "expected_response": "67 5A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "Getz": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x760",
+      "_extends": "Elantra.2010-2014",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 62 {calculated_key}",
+          "expected_response": "67 62",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_result": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ]
+    }
+  }
+}

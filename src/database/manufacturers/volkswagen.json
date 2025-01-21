@@ -1,0 +1,532 @@
+{
+  "Golf": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "ecu_id": "0x760",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter bypass mode",
+          "command": "31 10 FF 00",
+          "expected_response": "71 10 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Activate bypass",
+          "command": "31 11 FF 01",
+          "expected_response": "71 11 FF 00"
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Read key count",
+          "command": "31 04 FF 00",
+          "expected_response": "71 04"
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter clear mode",
+          "command": "31 05 FF 00",
+          "expected_response": "71 05 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Clear all keys",
+          "command": "31 06 FF 00",
+          "expected_response": "71 06 FF 00"
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter PIN read mode",
+          "command": "31 07 FF 00",
+          "expected_response": "71 07 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Read PIN",
+          "command": "31 08 FF 00",
+          "expected_response": "71 08",
+          "parse_pin": "lambda x: ''.join([chr(int(x[i:i+2], 16)) for i in range(4, 12, 2)])"
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Golf.2010-2014",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "Golf.2015-2019",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ]
+    }
+  },
+  "Polo": {
+    "2010-2014": {
+      "_extends": "Golf.2010-2014",
+      "ecu_id": "0x762",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ]
+    },
+    "2015-2019": {"_extends": "Polo.2010-2014"},
+    "2020-2023": {"_extends": "Polo.2010-2014"}
+  },
+  "Passat": {
+    "2010-2014": {
+      "_extends": "Golf.2010-2014",
+      "ecu_id": "0x761",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ]
+    },
+    "2015-2019": {"_extends": "Passat.2010-2014"},
+    "2020-2023": {"_extends": "Passat.2010-2014"}
+  },
+  "Transporter": {
+    "2010-2014": {
+      "_extends": "Golf.2010-2014",
+      "ecu_id": "0x763",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ]
+    },
+    "2015-2019": {"_extends": "Transporter.2010-2014"},
+    "2020-2023": {"_extends": "Transporter.2010-2014"}
+  },
+  "Tiguan": {
+    "2010-2014": {
+      "_extends": "Golf.2010-2014",
+      "ecu_id": "0x764",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ]
+    },
+    "2015-2019": {"_extends": "Tiguan.2010-2014"},
+    "2020-2023": {"_extends": "Tiguan.2010-2014"}
+  },
+  "T-Cross": {
+    "2018-2019": {
+      "_extends": "Golf.2010-2014",
+      "ecu_id": "0x765",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 61",
+          "expected_response": "67 61",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 62",
+          "expected_response": "67 62",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter programming mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register new key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ]
+    },
+    "2020-2023": {"_extends": "T-Cross.2018-2019"}
+  }
+}

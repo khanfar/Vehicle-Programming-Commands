@@ -1,0 +1,236 @@
+{
+  "Cruze": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "ecu_id": "0x720",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 65",
+          "expected_response": "67 65",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 66",
+          "expected_response": "67 66",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter Programming Mode",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Register New Key",
+          "command": "31 02 FF 00",
+          "expected_response": "71 02 FF 01",
+          "delay": 5
+        },
+        {
+          "description": "Confirm Registration",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF 00"
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 65",
+          "expected_response": "67 65",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 66",
+          "expected_response": "67 66",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter Bypass Mode",
+          "command": "31 10 FF 00",
+          "expected_response": "71 10 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Activate Bypass",
+          "command": "31 11 FF 01",
+          "expected_response": "71 11 FF 00"
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Read Key Count",
+          "command": "31 04 FF 00",
+          "expected_response": "71 04"
+        }
+      ],
+      "key_clear_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 65",
+          "expected_response": "67 65",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 66",
+          "expected_response": "67 66",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter Clear Mode",
+          "command": "31 05 FF 00",
+          "expected_response": "71 05 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Clear All Keys",
+          "command": "31 06 FF 00",
+          "expected_response": "71 06 FF 00"
+        }
+      ],
+      "pin_read_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.2
+        },
+        {
+          "description": "Enter Extended Diagnostic Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.5
+        },
+        {
+          "description": "Request Seed",
+          "command": "27 65",
+          "expected_response": "67 65",
+          "delay": 0.5
+        },
+        {
+          "description": "Send Key",
+          "command": "27 66",
+          "expected_response": "67 66",
+          "delay": 0.5
+        },
+        {
+          "description": "Enter PIN Read Mode",
+          "command": "31 07 FF 00",
+          "expected_response": "71 07 FF 00",
+          "delay": 1
+        },
+        {
+          "description": "Read PIN",
+          "command": "31 08 FF 00",
+          "expected_response": "71 08",
+          "parse_pin": "lambda x: ''.join([chr(int(x[i:i+2], 16)) for i in range(4, 12, 2)])"
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x721"
+    },
+    "2020-2023": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x722"
+    }
+  },
+  "Malibu": {
+    "2010-2014": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x723"
+    },
+    "2015-2019": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x724"
+    },
+    "2020-2023": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x725"
+    }
+  },
+  "Equinox": {
+    "2010-2014": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x726"
+    },
+    "2015-2019": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x727"
+    },
+    "2020-2023": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x728"
+    }
+  },
+  "Traverse": {
+    "2010-2014": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x729"
+    },
+    "2015-2019": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x72A"
+    },
+    "2020-2023": {
+      "_extends": "Cruze.2010-2014",
+      "ecu_id": "0x72B"
+    }
+  }
+}

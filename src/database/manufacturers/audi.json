@@ -1,0 +1,350 @@
+{
+  "A3": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x710",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 51",
+          "expected_response": "67 51",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 52 {calculated_key}",
+          "expected_response": "67 52",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 51",
+          "expected_response": "67 51",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 52 {calculated_key}",
+          "expected_response": "67 52",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 51",
+          "expected_response": "67 51",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 52 {calculated_key}",
+          "expected_response": "67 52",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_result": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x712",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 55",
+          "expected_response": "67 55",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 56 {calculated_key}",
+          "expected_response": "67 56",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x714",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 59",
+          "expected_response": "67 59",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 5A {calculated_key}",
+          "expected_response": "67 5A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "A4": {
+    "2010-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x720"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x722"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x724"
+    }
+  },
+  "A6": {
+    "2010-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x730"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x732"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x734"
+    }
+  },
+  "A8": {
+    "2010-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x740"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x742"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x744"
+    }
+  },
+  "Q3": {
+    "2012-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x750"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x752"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x754"
+    }
+  },
+  "Q5": {
+    "2010-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x760"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x762"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x764"
+    }
+  },
+  "Q7": {
+    "2010-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x770"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x772"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x774"
+    }
+  },
+  "Q8": {
+    "2019-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x780"
+    }
+  },
+  "TT": {
+    "2010-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x790"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x792"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x794"
+    }
+  },
+  "R8": {
+    "2010-2014": {
+      "_extends": "A3.2010-2014",
+      "immobilizer_ecu_id": "0x7A0"
+    },
+    "2015-2019": {
+      "_extends": "A3.2015-2019",
+      "immobilizer_ecu_id": "0x7A2"
+    },
+    "2020-2023": {
+      "_extends": "A3.2020-2023",
+      "immobilizer_ecu_id": "0x7A4"
+    }
+  }
+}

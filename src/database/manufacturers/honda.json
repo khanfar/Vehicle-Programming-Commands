@@ -1,0 +1,326 @@
+{
+  "Civic": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x810",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 81",
+          "expected_response": "67 81",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 82 {calculated_key}",
+          "expected_response": "67 82",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 81",
+          "expected_response": "67 81",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 82 {calculated_key}",
+          "expected_response": "67 82",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 81",
+          "expected_response": "67 81",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 82 {calculated_key}",
+          "expected_response": "67 82",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_result": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "Civic.2010-2014",
+      "immobilizer_ecu_id": "0x812",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 85",
+          "expected_response": "67 85",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 86 {calculated_key}",
+          "expected_response": "67 86",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x814",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 89",
+          "expected_response": "67 89",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 8A {calculated_key}",
+          "expected_response": "67 8A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "Accord": {
+    "2010-2014": {
+      "_extends": "Civic.2010-2014",
+      "immobilizer_ecu_id": "0x820"
+    },
+    "2015-2019": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x822"
+    },
+    "2020-2023": {
+      "_extends": "Civic.2020-2023",
+      "immobilizer_ecu_id": "0x824"
+    }
+  },
+  "CR-V": {
+    "2010-2014": {
+      "_extends": "Civic.2010-2014",
+      "immobilizer_ecu_id": "0x830"
+    },
+    "2015-2019": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x832"
+    },
+    "2020-2023": {
+      "_extends": "Civic.2020-2023",
+      "immobilizer_ecu_id": "0x834"
+    }
+  },
+  "HR-V": {
+    "2015-2019": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x840"
+    },
+    "2020-2023": {
+      "_extends": "Civic.2020-2023",
+      "immobilizer_ecu_id": "0x842"
+    }
+  },
+  "Pilot": {
+    "2010-2014": {
+      "_extends": "Civic.2010-2014",
+      "immobilizer_ecu_id": "0x850"
+    },
+    "2015-2019": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x852"
+    },
+    "2020-2023": {
+      "_extends": "Civic.2020-2023",
+      "immobilizer_ecu_id": "0x854"
+    }
+  },
+  "Odyssey": {
+    "2010-2014": {
+      "_extends": "Civic.2010-2014",
+      "immobilizer_ecu_id": "0x860"
+    },
+    "2015-2019": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x862"
+    },
+    "2020-2023": {
+      "_extends": "Civic.2020-2023",
+      "immobilizer_ecu_id": "0x864"
+    }
+  },
+  "Fit": {
+    "2010-2014": {
+      "_extends": "Civic.2010-2014",
+      "immobilizer_ecu_id": "0x870"
+    },
+    "2015-2019": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x872"
+    },
+    "2020-2023": {
+      "_extends": "Civic.2020-2023",
+      "immobilizer_ecu_id": "0x874"
+    }
+  },
+  "Insight": {
+    "2010-2014": {
+      "_extends": "Civic.2010-2014",
+      "immobilizer_ecu_id": "0x880"
+    },
+    "2015-2019": {
+      "_extends": "Civic.2015-2019",
+      "immobilizer_ecu_id": "0x882"
+    },
+    "2020-2023": {
+      "_extends": "Civic.2020-2023",
+      "immobilizer_ecu_id": "0x884"
+    }
+  }
+}

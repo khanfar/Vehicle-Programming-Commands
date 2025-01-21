@@ -1,0 +1,324 @@
+{
+  "C-Class": {
+    "2010-2014": {
+      "supports_key_add": true,
+      "supports_bypass": true,
+      "supports_key_count": true,
+      "supports_key_clear": true,
+      "supports_pin_read": true,
+      "immobilizer_ecu_id": "0x610",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 71",
+          "expected_response": "67 71",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 72 {calculated_key}",
+          "expected_response": "67 72",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "bypass_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 71",
+          "expected_response": "67 71",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 72 {calculated_key}",
+          "expected_response": "67 72",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Bypass Routine",
+          "command": "31 01 60 01",
+          "expected_response": "71 01 60 01",
+          "delay": 2
+        },
+        {
+          "description": "Check Bypass Status",
+          "command": "31 03 60 01",
+          "expected_response": "71 03 60",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ],
+      "key_count_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 71",
+          "expected_response": "67 71",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 72 {calculated_key}",
+          "expected_response": "67 72",
+          "delay": 0.1
+        },
+        {
+          "description": "Read Key Count",
+          "command": "22 F1 90",
+          "expected_response": "62 F1 90",
+          "parse_result": "lambda x: int(x[6:8], 16)",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2015-2019": {
+      "_extends": "C-Class.2010-2014",
+      "immobilizer_ecu_id": "0x612",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 1",
+          "command": "27 75",
+          "expected_response": "67 75",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 1",
+          "command": "27 76 {calculated_key}",
+          "expected_response": "67 76",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x614",
+      "key_add_sequence": [
+        {
+          "description": "Tester Present",
+          "command": "3E 00",
+          "expected_response": "7E 00",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Extended Session",
+          "command": "10 03",
+          "expected_response": "50 03",
+          "delay": 0.1
+        },
+        {
+          "description": "Request Seed Level 2",
+          "command": "27 79",
+          "expected_response": "67 79",
+          "parse_seed": "lambda x: x[4:12]",
+          "delay": 0.1
+        },
+        {
+          "description": "Send Key Level 2",
+          "command": "27 7A {calculated_key}",
+          "expected_response": "67 7A",
+          "delay": 0.1
+        },
+        {
+          "description": "Enter Programming Session",
+          "command": "10 02",
+          "expected_response": "50 02",
+          "delay": 0.1
+        },
+        {
+          "description": "Start Key Programming Routine",
+          "command": "31 01 FF 00",
+          "expected_response": "71 01 FF 00",
+          "delay": 5
+        },
+        {
+          "description": "Check Programming Status",
+          "command": "31 03 FF 00",
+          "expected_response": "71 03 FF",
+          "success_condition": "response[8:10] == '00'",
+          "delay": 0.1
+        }
+      ]
+    }
+  },
+  "E-Class": {
+    "2010-2014": {
+      "_extends": "C-Class.2010-2014",
+      "immobilizer_ecu_id": "0x620"
+    },
+    "2015-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x622"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x624"
+    }
+  },
+  "S-Class": {
+    "2010-2014": {
+      "_extends": "C-Class.2010-2014",
+      "immobilizer_ecu_id": "0x630"
+    },
+    "2015-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x632"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x634"
+    }
+  },
+  "GLC": {
+    "2015-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x640"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x642"
+    }
+  },
+  "GLE": {
+    "2015-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x650"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x652"
+    }
+  },
+  "GLS": {
+    "2016-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x660"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x662"
+    }
+  },
+  "G-Class": {
+    "2010-2014": {
+      "_extends": "C-Class.2010-2014",
+      "immobilizer_ecu_id": "0x670"
+    },
+    "2015-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x672"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x674"
+    }
+  },
+  "CLA": {
+    "2013-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x680"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x682"
+    }
+  },
+  "AMG-GT": {
+    "2015-2019": {
+      "_extends": "C-Class.2015-2019",
+      "immobilizer_ecu_id": "0x690"
+    },
+    "2020-2023": {
+      "_extends": "C-Class.2020-2023",
+      "immobilizer_ecu_id": "0x692"
+    }
+  }
+}
